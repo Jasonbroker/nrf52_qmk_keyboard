@@ -7,8 +7,21 @@
         "**/.build": true,
         "**/*.hex": true,
         "**/*.bin": true,
-        "**/*.uf2": true
+        "**/*.uf2": true,
+        "keyboards/[^k]*":true,
+        "keyboards/?[^i]*":true,
+        "keyboards/??[^n]*":true,
+        "keyboards/????[^l]*":true,
+        "keyboards/?????[^e]*":true,
+        "users":true,
+        "layouts":true,
+        "docs":true
     },
+    "search.exclude": {
+        "**/*.code-search": false,
+        ".build/*": true,
+        "docs/*": true,
+      },
     "files.associations": {
         "*.h": "c",
         "*.c": "c",

@@ -136,7 +136,7 @@ void protocol_setup(void) {
 }
 
 static host_driver_t *driver = NULL;
-
+extern host_driver_t orion_chibios_driver;
 void protocol_pre_init(void) {
     /* Init USB */
     usb_event_queue_init();
@@ -154,7 +154,7 @@ void protocol_pre_init(void) {
             break;
         }
 #else
-        driver = &chibios_driver;
+        driver = &orion_chibios_driver;
         break;
 #endif
         wait_ms(50);

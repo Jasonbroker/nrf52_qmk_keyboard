@@ -1,0 +1,5 @@
+loadfile .build/kindlestar_aquila_via.hex
+
+reset
+
+exit
