@@ -1,7 +1,14 @@
 # MCU name
-MCU = STM32F103
+MCU   = GD32VF103
+BOARD = SIPEED_LONGAN_NANO
 
-BOOTLOADER = stm32duino
+# Bootloader selection
+BOOTLOADER = gd32v-dfu
+
+# Build Options
+#   change yes to no to disable
+#
+KEYBOARD_SHARED_EP = yes
 
 # Build Options
 #   change yes to no to disable
