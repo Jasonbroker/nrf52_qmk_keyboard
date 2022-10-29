@@ -27,9 +27,8 @@ void orion_uart_send_keyboard(report_keyboard_t *report)
 #ifdef NKRO_ENABLE
 if (keymap_config.nkro)
 {
-    // 限制12位
-    sdWrite(&SD1, raw, 32);
-    uprintf("bits %d mod %x\n", KEYBOARD_REPORT_BITS, report->nkro.mods);
+    uprintf("canot enter this place bits %d mod %x\n", KEYBOARD_REPORT_BITS, report->nkro.mods);
+    keymap_config.nkro = false;
 } else
 #endif
 {

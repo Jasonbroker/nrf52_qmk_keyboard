@@ -152,7 +152,7 @@ void finish_handler(void)
     }
 }
 
-
+void handlenkro(void);
 #include "kindlestar_custom_animation.h"
 void start_selection_rgb_animation(void)
 {
@@ -183,14 +183,7 @@ void keyboard_post_init_kb(void) {
     }
 
     start_selection_rgb_animation();
-#ifdef NKRO_ENABLE
-    // if (keymap_config.nkro)
-    // {
-    //     keymap_config.nkro = false;
-    //     dprintf("keymap config changed 8");
-    //     eeconfig_update_keymap(keymap_config.raw);
-    // }
-#endif
+    handlenkro();
 }
 
 void rgb_matrix_indicators_kb(void) {
@@ -245,6 +238,8 @@ void update_send_mode(SEND_MODE _mode)
 {
     mode = _mode;
     eeconfig_update_user(mode);
+    handlenkro();
+
     uprintf("update send mode to %d\n", mode);
 }
 
@@ -264,6 +259,18 @@ void reboot_nrf(void)
 {
     perform_cmd(KBD_CMD_REBOOT);
     start_sync();
+}
+
+void handlenkro(void)
+{
+#ifdef NKRO_ENABLE
+    if ( mode == SEND_MODE_USB) {
+        keymap_config.nkro = true;
+        dprintf("keymap config changed 8");
+    } else {
+        keymap_config.nkro = false;
+    }
+#endif
 }
 
 ////////////////////////// stanby mode ///////////////////////////////////
