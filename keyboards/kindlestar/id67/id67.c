@@ -22,7 +22,7 @@ led_config_t g_led_config = {{
         {15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29},
         {43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, NO_LED},
         {44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, NO_LED},
-        {66, 65, 64, NO_LED, NO_LED, 63,NO_LED, NO_LED, 62, 61, 60, 59, 58, NO_LED}
+        {66, 65, 64, NO_LED, NO_LED, 63, NO_LED, NO_LED, NO_LED, 62, 61, 60, 59, 58, NO_LED}
 },
 // x = 224 / (NUMBER_OF_COLS - 1) * COL_POSITION
 // y = 64 / (NUMBER_OF_ROWS - 1) * ROW_POSITION
