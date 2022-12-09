@@ -20,7 +20,7 @@
 /* USB Device descriptor parameter */
 #define VENDOR_ID       0x6468
 #define MANUFACTURER    IDOBAO
-#define PRODUCT         ID67
+#define PRODUCT         IDOBAO
 /* USB Device descriptor parameter */
 
 #define PRODUCT_ID      0x0100
