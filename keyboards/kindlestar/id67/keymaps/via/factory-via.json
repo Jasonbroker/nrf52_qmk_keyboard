@@ -1,7 +1,7 @@
 {
-    "name":"AQUILA",
-    "vendorId": "0x3468",
-    "productId": "0x0102",
+    "name":"IDOBAO",
+    "vendorId": "0x6468",
+    "productId": "0x0100",
     "lighting": "qmk_rgblight",
     "customKeycodes": [
         {"name": "Select USB", "title": "Select USB", "shortName": "USB"},
@@ -18,7 +18,7 @@
         {"name": "Enter Sleep", "title": "Enter Sleep", "shortName": "KBDSLP"},
         {"name": "Receiver Dfu", "title": "Receiver Dfu", "shortName": "REC_DFU"}
       ],
-    "matrix": {"rows": 5, "cols": 14},
+    "matrix": {"rows": 5, "cols": 15},
     "layouts": {
         "keymap": [
             [
@@ -38,7 +38,8 @@
               {
                 "w": 2
               },
-              "0,13"
+              "0,13",
+              "0,14"
             ],
             [
               {
@@ -61,18 +62,7 @@
                 "w": 1.5
               },
               "1,13",
-              {
-                "w": 0.75
-              },
-              "4,6",
-              {
-                "w": 0.75
-              },
-              "2,13",
-              {
-                "w": 0.75
-              },
-              "4,7"
+              "1,14"
             ],
             [
               {
@@ -93,7 +83,8 @@
               {
                 "w": 2.25
               },
-              "2,12"
+              "2,12",
+              "2,13"
             ],
             [
               {
@@ -111,14 +102,14 @@
               "3,9",
               "3,10",
               {
-                "w": 2.75
+                "w": 1.75
               },
               "3,11",
               {
-                "x": 0.25,
                 "a": 7
               },
-              "3,12"
+              "3,12",
+              "3,13"
             ],
             [
               {
@@ -141,10 +132,6 @@
               "4,5",
               {
                 "a": 4,
-                "w": 1.25
-              },
-              "4,8",
-              {
                 "w": 1.25
               },
               "4,9",
