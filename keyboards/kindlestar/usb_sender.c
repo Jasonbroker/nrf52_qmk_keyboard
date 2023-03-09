@@ -61,7 +61,11 @@ void usb_send_keyboard(report_keyboard_t *report)
              * every iteration - otherwise the system will remain locked,
              * no interrupts served, so USB not going through as well.
              * Note: for suspend, need USB_USE_WAIT == TRUE in halconf.h */
-            osalThreadSuspendS(&(&USB_DRIVER)->epc[KEYBOARD_IN_EPNUM]->in_state->thread);
+        if (osalThreadSuspendTimeoutS(&(&USB_DRIVER)->epc[MOUSE_IN_EPNUM]->in_state->thread, TIME_MS2I(10)) == MSG_TIMEOUT) {
+            goto unlock;
+            return;
+        }
+        // osalThreadSuspendS(&(&USB_DRIVER)->epc[KEYBOARD_IN_EPNUM]->in_state->thread);
 
             /* after osalThreadSuspendS returns USB status might have changed */
             if (usbGetDriverStateI(&USB_DRIVER) != USB_ACTIVE) {
@@ -111,35 +115,14 @@ void usb_send_mouse(report_mouse_t *report) {};
 #endif
 
 #ifdef EXTRAKEY_ENABLE
-void send_extra(uint8_t report_id, uint16_t data);
+void send_extra(report_extra_t *report);
 #endif
 
-void usb_send_system(uint16_t data)
+void usb_send_extra(report_extra_t *report)
 {
 #ifdef EXTRAKEY_ENABLE
-    send_extra(REPORT_ID_SYSTEM, data);
+    send_extra(report);
 #endif
 }
-void usb_send_consumer(uint16_t data)
-{
-#ifdef EXTRAKEY_ENABLE
-    send_extra(REPORT_ID_CONSUMER, data);
-#endif
-}
-void usb_send_digitizer(report_digitizer_t *report)
-{
-#ifdef DIGITIZER_ENABLE
-#    ifdef DIGITIZER_SHARED_EP
-    osalSysLock();
-    if (usbGetDriverStateI(&USB_DRIVER) != USB_ACTIVE) {
-        osalSysUnlock();
-        return;
-    }
 
-    usbStartTransmitI(&USB_DRIVER, DIGITIZER_IN_EPNUM, (uint8_t *)report, sizeof(report_digitizer_t));
-    osalSysUnlock();
-#    else
-    chnWrite(&drivers.digitizer_driver.driver, (uint8_t *)report, sizeof(report_digitizer_t));
-#    endif
-#endif
-}
+

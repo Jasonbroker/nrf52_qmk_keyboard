@@ -103,6 +103,7 @@ void init_send_mode(void)
     }
 }
 
+extern uint8_t sleep_counter;
 void housekeeping_task_user(void)
 {
     if (!sdGetWouldBlock(&SD1))
@@ -127,6 +128,15 @@ void housekeeping_task_user(void)
             update_ble_keyboard_led_state(false);
             uprintf("update caps lock off\n");
         }
+    }
+    if (sleep_counter == 1) { // 持续使用
+        chThdSleepMilliseconds(1);
+    }
+    else if (sleep_counter == 2) {
+        chThdSleepMilliseconds(5);
+    }
+    else {
+        chThdSleepMilliseconds(10);
     }
 }
 
@@ -186,8 +196,8 @@ void keyboard_post_init_kb(void) {
     handlenkro();
 }
 
-void rgb_matrix_indicators_kb(void) {
-    custom_animation_task(0, 0);
+bool rgb_matrix_indicators_kb(void) {
+    return custom_animation_task(0, 0);
 }
 
 #else

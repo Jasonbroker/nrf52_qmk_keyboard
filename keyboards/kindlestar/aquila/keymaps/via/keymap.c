@@ -39,7 +39,7 @@ bool in_gaming_mode = false;
 
 enum custom_keycodes {
     // BLE keys
-    SEL_USB = USER00,	  /* Select USB HID Sending		  */
+    SEL_USB = QK_KB_0,	  /* Select USB HID Sending		  */
     ADV_ID0,              /* Start advertising to PeerID 0        */
     ADV_ID1,              /* Start advertising to PeerID 1        */
     ADV_ID2,              /* Start advertising to PeerID 2        */
@@ -99,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [_FN] = LAYOUT(
         SEL_USB, ADV_ID0, ADV_ID1, ADV_ID2, ADV_ID3, ADV_ID4, ADV_ID5, SEL_RDOE,_______,    _______,        DELBNDS, _______, _______,  REC_DFU,
-        _______, BLE_RBD, _______, _______, RESET,   TESTMOD, _______, _______, _______,    CRGBRST,        CUR_MOD, RGB_SAI, RGB_SAD,  _______,
+        _______, BLE_RBD, _______, _______, QK_BOOT, TESTMOD, _______, _______, _______,    CRGBRST,        CUR_MOD, RGB_SAI, RGB_SAD,  _______,
         _______, AD_WO_L, _______, _______, _______, TOG_GAM, TG(0),   TG(1),   _______,    RGB_TOG,        RGB_HUI, RGB_HUD, _______,  ENT_SLP,
         _______, _______, _______, _______, _______, _______, _______, _______, _______,    _______,        _______, _______, RGB_VAI,
         _______, _______, _______,                   _______, _______, _______, _______,    _______,        _______, RGB_RMOD,RGB_VAD,  RGB_MOD

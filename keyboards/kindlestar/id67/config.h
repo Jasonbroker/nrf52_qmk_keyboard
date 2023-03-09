@@ -16,11 +16,13 @@
 
 #pragma once
 
-
+#undef VENDOR_ID
+#undef MANUFACTURER
+#undef PRODUCT
 /* USB Device descriptor parameter */
 #define VENDOR_ID       0x6468
-#define MANUFACTURER    IDOBAO
-#define PRODUCT         IDOBAO
+#define MANUFACTURER    "IDOBAO"
+#define PRODUCT         "IDOBAO"
 /* USB Device descriptor parameter */
 
 #define PRODUCT_ID      0x0100
@@ -56,6 +58,7 @@
 #ifdef RGB_MATRIX_ENABLE
 
 #define DRIVER_LED_TOTAL 67
+#define RGB_MATRIX_LED_COUNT 67
 
 #define START_BREATH_IDX 14
 

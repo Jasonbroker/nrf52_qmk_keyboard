@@ -17,15 +17,6 @@
 #pragma once
 
 
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0x3468
-#define MANUFACTURER    KINDLESTAR
-#define PRODUCT         AQUILA
-/* USB Device descriptor parameter */
-
-#define PRODUCT_ID      0x0102
-#define DEVICE_VER      0x0101
-
 /* key matrix pins */
 #define MATRIX_ROW_PINS {A4, A3, A2, A1, A0}
 #define MATRIX_COL_PINS {B7, B6, B5, B4, B3, A15, A8, B15, B14, B13, B12, B1, A7, B0}
@@ -42,8 +33,8 @@
 /* Set 0 if debouncing isn't needed */
 #define DEBOUNCE 5
 
-#define NO_ACTION_MACRO
-#define NO_ACTION_FUNCTION
+// #define NO_ACTION_MACRO
+// #define NO_ACTION_FUNCTION
 
 #define ENCODERS_PAD_A { A5 }
 #define ENCODERS_PAD_B { A6 }
@@ -70,6 +61,7 @@
 #ifdef RGB_MATRIX_ENABLE
 
 #define DRIVER_LED_TOTAL 64
+#define RGB_MATRIX_LED_COUNT 64
 
 #define START_BREATH_IDX 13
 
