@@ -3,21 +3,7 @@
     "vendorId": "0x6468",
     "productId": "0x0100",
     "lighting": "qmk_rgblight",
-    "customKeycodes": [
-        {"name": "Select USB", "title": "Select USB", "shortName": "USB"},
-        {"name": "Select BLE1", "title": "Select BLE1", "shortName": "BLE1"},
-        {"name": "Select BLE2", "title": "Select BLE2", "shortName": "BLE2"},
-        {"name": "Select BLE3", "title": "Select BLE3", "shortName": "BLE3"},
-        {"name": "Select BLE4", "title": "Select BLE4", "shortName": "BLE4"},
-        {"name": "Select BLE5", "title": "Select BLE5", "shortName": "BLE5"},
-        {"name": "Select BLE6", "title": "Select BLE6", "shortName": "BLE6"},
-        {"name": "Select 2.4G", "title": "Select 2.4G", "shortName": "2.4G"},
-        {"name": "Rebond Current", "title": "Select 2.4G", "shortName": "Rebond BLE"},
-        {"name": "Clear Bonds", "title": "Clear Bonds", "shortName": "CLRBND"},
-        {"name": "Toggle Gaming", "title": "Toggle Gaming", "shortName": "GAMING"},
-        {"name": "Enter Sleep", "title": "Enter Sleep", "shortName": "KBDSLP"},
-        {"name": "Receiver Dfu", "title": "Receiver Dfu", "shortName": "REC_DFU"}
-      ],
+    "menus": ["qmk_rgb_matrix"],
     "matrix": {"rows": 5, "cols": 15},
     "layouts": {
         "keymap": [
@@ -105,15 +91,11 @@
                 "w": 1.75
               },
               "3,11",
-              {
-                "a": 7
-              },
               "3,12",
               "3,13"
             ],
             [
               {
-                "a": 4,
                 "w": 1.25
               },
               "4,0",
@@ -131,7 +113,6 @@
               },
               "4,5",
               {
-                "a": 4,
                 "w": 1.25
               },
               "4,9",
@@ -140,8 +121,7 @@
               },
               "4,10",
               {
-                "x": 0.5,
-                "a": 7
+                "x": 0.5
               },
               "4,11",
               "4,12",

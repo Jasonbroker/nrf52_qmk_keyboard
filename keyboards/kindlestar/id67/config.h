@@ -16,18 +16,6 @@
 
 #pragma once
 
-#undef VENDOR_ID
-#undef MANUFACTURER
-#undef PRODUCT
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0x6468
-#define MANUFACTURER    "IDOBAO"
-#define PRODUCT         "IDOBAO"
-/* USB Device descriptor parameter */
-
-#define PRODUCT_ID      0x0100
-#define DEVICE_VER      0x0101
-
 /* key matrix pins */
 #define MATRIX_ROW_PINS {A4, A3, A2, A1, A0}
 #define MATRIX_COL_PINS {A15, B3, B4, B5, B6, B7, B12, B13, B14, B15, A8, A6, A7, B0, B1}
@@ -43,9 +31,6 @@
 
 /* Set 0 if debouncing isn't needed */
 #define DEBOUNCE 5
-
-#define NO_ACTION_MACRO
-#define NO_ACTION_FUNCTION
 
 #define LED_PIN_ON_STATE 0
 

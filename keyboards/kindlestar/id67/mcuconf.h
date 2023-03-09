@@ -30,3 +30,9 @@
 #undef STM32_SERIAL_USE_USART1
 #define STM32_SERIAL_USE_USART1             TRUE
 #endif
+
+#ifdef STM32_SPI_USE_SPI2
+#undef STM32_SPI_USE_SPI2
+#define STM32_SPI_USE_SPI2             FALSE
+#endif
+
