@@ -4,7 +4,7 @@
         "usb": {
         "vid": "0x6468",
         "pid": "0x0100",
-        "device_version": "1.0.0"
+        "device_version": "1.0.2"
     },
     "manufacturer": "IDOBAO",
     "keyboard_name": "ID67",
