@@ -2,7 +2,6 @@
     "name":"IDOBAO",
     "vendorId": "0x6468",
     "productId": "0x0100",
-    "lighting": "qmk_rgblight",
     "menus": ["qmk_rgb_matrix"],
     "matrix": {"rows": 5, "cols": 15},
     "layouts": {
@@ -108,7 +107,6 @@
               },
               "4,2",
               {
-                "a": 7,
                 "w": 6.25
               },
               "4,5",
