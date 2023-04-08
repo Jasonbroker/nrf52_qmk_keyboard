@@ -19,6 +19,8 @@ const SerialConfig config = {
 void orion_uart_init(void)
 {
   sdStart(&SD1, &config);
+  palSetPadMode(GPIOA, 9, PAL_MODE_ALTERNATE(1));       /* USART1 TX.       */
+  palSetPadMode(GPIOA, 10, PAL_MODE_ALTERNATE(1));      /* USART1 RX. */
 }
 
 extern SEND_MODE mode;

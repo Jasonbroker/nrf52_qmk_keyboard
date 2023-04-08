@@ -25,28 +25,8 @@
 #include "usb_main.h"
 #include "usb_util.h"
 
-void bootloader_jump(void)
-{
-    BKP->DR10 = 0x424C;
-    wait_ms(10);
-    NVIC_SystemReset();
-}
-
-#define PWR_OFFSET               (PWR_BASE - PERIPH_BASE)
-#define PWR_CR_OFFSET            0x00U
-#define PWR_CSR_OFFSET           0x04U
-#define PWR_CR_OFFSET_BB         (PWR_OFFSET + PWR_CR_OFFSET)
-#define PWR_CSR_OFFSET_BB        (PWR_OFFSET + PWR_CSR_OFFSET)
-#define CSR_EWUP_BB(VAL)         ((uint32_t)(PERIPH_BB_BASE + (PWR_CSR_OFFSET_BB * 32U) + (POSITION_VAL(VAL) * 4U)))
-void check_standby(void)
-{
-    if (PWR->CSR & PWR_CSR_SBF) {
-        PWR->CR |= PWR_CR_CWUF;
-        PWR->CR |= PWR_CR_CSBF;
-          *(__IO uint32_t *) CSR_EWUP_BB(PWR_CSR_EWUP) = (uint32_t)DISABLE;
-        // HAL_PWR_DisableWakeUpPin(PWR_WAKEUP_PIN1); // for hal
-    }
-}
+void check_standby(void);
+void POWER_EnterSleep_v1(void);
 
 void keyboard_pre_init_user()
 {
@@ -283,49 +263,6 @@ void handlenkro(void)
 #endif
 }
 
-////////////////////////// stanby mode ///////////////////////////////////
-
-// static void POWER_EnterSleep(void) {
-//     /* Clear Wake-up flag */
-//     PWR->CR |= PWR_CR_CWUF | PWR_CR_CSBF;
-//     /* Select Sleep mode */
-//     /* PWR->CR |= PWR_CR_PDDS | PWR_CR_LPDS; */
-//     /* Set SLEEPDEEP bit of Cortex System Control Register */
-//     SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
-//     /* Request Wait For Interrupt */
-//     __WFI();
-//     /* Reset SLEEPDEEP bit of Cortex System Control Register */
-//     SCB->SCR &= ~SCB_SCR_SLEEPDEEP_Msk;
-//     NVIC_SystemReset();
-// }
-
-static void POWER_EnterSleep_v1(void) {
-#if(DEBUG_ENABLE)
-// DBGMCU->CR |= DBGMCU_CR_DBG_STOP | DBGMCU_CR_DBG_STANDBY;
-#endif
-    // https://www.youtube.com/watch?v=O82rj9qxkgs
-    // enable pwr control clock
-    RCC->APB1ENR |= (RCC_APB1ENR_PWREN);
-
-    // #if (!defined(DEBUG) || !defined(USE_DBG_STANDBY))
-    // /* Disable DBG_STANDBY. Prevent DBG_STANDBY from being enabled by debugger when
-    //  * downloading programs, causing standby mode power consumption to be too high */
-    // SET_BIT(RCC->APB2ENR, RCC_APB2ENR_DBGMCUEN);
-    // CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY);
-    // #endif
-
-
-    // // set sleepdeep mask
-    SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
-    // // power down deep sleep,  1 is standby mode
-    PWR->CR |= PWR_CR_PDDS;
-
-    PWR->CSR |= PWR_CSR_EWUP;
-    PWR->CR |= PWR_CR_CWUF;
-
-    __WFI();
-}
-
 void kbd_will_enter_sleep(void) {
     led_suspend();
     usbStop(&USB_DRIVER);
@@ -353,3 +290,98 @@ void enter_standby_mode(void)
         // POWER_EnterSleep();
 }
 
+// 默认使用这个
+#ifdef QMK_MCU_STM32F103
+void bootloader_jump(void)
+{
+    BKP->DR10 = 0x424C;
+    wait_ms(10);
+    NVIC_SystemReset();
+}
+
+#define PWR_OFFSET               (PWR_BASE - PERIPH_BASE)
+#define PWR_CR_OFFSET            0x00U
+#define PWR_CSR_OFFSET           0x04U
+#define PWR_CR_OFFSET_BB         (PWR_OFFSET + PWR_CR_OFFSET)
+#define PWR_CSR_OFFSET_BB        (PWR_OFFSET + PWR_CSR_OFFSET)
+#define CSR_EWUP_BB(VAL)         ((uint32_t)(PERIPH_BB_BASE + (PWR_CSR_OFFSET_BB * 32U) + (POSITION_VAL(VAL) * 4U)))
+void check_standby(void)
+{
+    if (PWR->CSR & PWR_CSR_SBF) {
+        PWR->CR |= PWR_CR_CWUF;
+        PWR->CR |= PWR_CR_CSBF;
+          *(__IO uint32_t *) CSR_EWUP_BB(PWR_CSR_EWUP) = (uint32_t)DISABLE;
+        // HAL_PWR_DisableWakeUpPin(PWR_WAKEUP_PIN1); // for hal
+    }
+}
+
+
+////////////////////////// stanby mode ///////////////////////////////////
+
+// static void POWER_EnterSleep(void) {
+//     /* Clear Wake-up flag */
+//     PWR->CR |= PWR_CR_CWUF | PWR_CR_CSBF;
+//     /* Select Sleep mode */
+//     /* PWR->CR |= PWR_CR_PDDS | PWR_CR_LPDS; */
+//     /* Set SLEEPDEEP bit of Cortex System Control Register */
+//     SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
+//     /* Request Wait For Interrupt */
+//     __WFI();
+//     /* Reset SLEEPDEEP bit of Cortex System Control Register */
+//     SCB->SCR &= ~SCB_SCR_SLEEPDEEP_Msk;
+//     NVIC_SystemReset();
+// }
+
+void POWER_EnterSleep_v1(void) {
+#ifdef QMK_MCU_STM32F072
+#if(DEBUG_ENABLE)
+// DBGMCU->CR |= DBGMCU_CR_DBG_STOP | DBGMCU_CR_DBG_STANDBY;
+#endif
+    // https://www.youtube.com/watch?v=O82rj9qxkgs
+    // enable pwr control clock
+    RCC->APB1ENR |= (RCC_APB1ENR_PWREN);
+
+    // #if (!defined(DEBUG) || !defined(USE_DBG_STANDBY))
+    // /* Disable DBG_STANDBY. Prevent DBG_STANDBY from being enabled by debugger when
+    //  * downloading programs, causing standby mode power consumption to be too high */
+    // SET_BIT(RCC->APB2ENR, RCC_APB2ENR_DBGMCUEN);
+    // CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY);
+    // #endif
+
+
+    // // set sleepdeep mask
+    SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
+    // // power down deep sleep,  1 is standby mode
+    PWR->CR |= PWR_CR_PDDS;
+
+    PWR->CSR |= PWR_CSR_EWUP;
+    PWR->CR |= PWR_CR_CWUF;
+#else // end of QMK_MCU_STM32F072
+#if(DEBUG_ENABLE)
+// DBGMCU->CR |= DBGMCU_CR_DBG_STOP | DBGMCU_CR_DBG_STANDBY;
+#endif
+    // https://www.youtube.com/watch?v=O82rj9qxkgs
+    // enable pwr control clock
+    RCC->APB1ENR |= (RCC_APB1ENR_PWREN);
+
+    // #if (!defined(DEBUG) || !defined(USE_DBG_STANDBY))
+    // /* Disable DBG_STANDBY. Prevent DBG_STANDBY from being enabled by debugger when
+    //  * downloading programs, causing standby mode power consumption to be too high */
+    // SET_BIT(RCC->APB2ENR, RCC_APB2ENR_DBGMCUEN);
+    // CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY);
+    // #endif
+
+
+    // // set sleepdeep mask
+    SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
+    // // power down deep sleep,  1 is standby mode
+    PWR->CR |= PWR_CR_PDDS;
+
+    PWR->CSR |= PWR_CSR_EWUP;
+    PWR->CR |= PWR_CR_CWUF;
+#endif
+
+
+    __WFI();
+}
+#endif

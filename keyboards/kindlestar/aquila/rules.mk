@@ -1,7 +1,3 @@
-# MCU name
-MCU = STM32F103
-
-BOOTLOADER = stm32duino
 
 # Build Options
 #   change yes to no to disable
