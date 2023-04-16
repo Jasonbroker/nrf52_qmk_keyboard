@@ -11,6 +11,9 @@ RGB_MATRIX_EFFECT(CUSTOM_ORANGE)
 static bool CUSTOM_##NAME(effect_params_t* params) { \
   RGB_MATRIX_USE_LIMITS(led_min, led_max); \
   float f = (float)rgb_matrix_config.hsv.v / UINT8_MAX; \
+  if (R == 0xff && G == 0xff && f > 0.18) { \
+    f = 0.18; \
+  } \
   for (uint8_t i = led_min; i < led_max; i++) { \
     rgb_matrix_set_color(i, f * R, f * G , f * B); \
   } \
