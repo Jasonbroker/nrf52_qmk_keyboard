@@ -1,5 +1,5 @@
 #include "hal.h"
-
+#include "quantum.h"
 
 void check_standby(void)
 {
@@ -9,6 +9,10 @@ void check_standby(void)
     //     NVIC_SystemReset();
     //     // HAL_PWR_DisableWakeUpPin(PWR_WAKEUP_PIN1); // for hal
     // }
+    setPinOutput(C15);
+    writePinLow(C15);
+    wait_ms(50);
+    palSetLineMode(C15, PAL_MODE_INPUT_ANALOG);
 }
 
 
