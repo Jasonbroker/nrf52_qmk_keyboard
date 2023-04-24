@@ -154,7 +154,11 @@ void protocol_pre_init(void) {
             break;
         }
 #else
-        driver = &orion_chibios_driver;
+#ifdef USE_USB_MOD
+    driver = &chibios_driver;
+#else
+    driver = &orion_chibios_driver;    
+#endif
         break;
 #endif
         wait_ms(50);

@@ -24,6 +24,17 @@
 
 #include "usb_main.h"
 #include "usb_util.h"
+#include "config.h"
+
+#ifndef KEYSTAR_LED_RED_ON
+#define KEYSTAR_LED_RED_ON() {}
+#define KEYSTAR_LED_GREEN_ON() {}
+#define KEYSTAR_LED_BLUE_ON() {}
+
+#define KEYSTAR_LED_RED_OFF() {}
+#define KEYSTAR_LED_GREEN_OFF() {}
+#define KEYSTAR_LED_BLUE_OFF() {}
+#endif
 
 void check_standby(void);
 void POWER_EnterSleep_v1(void);

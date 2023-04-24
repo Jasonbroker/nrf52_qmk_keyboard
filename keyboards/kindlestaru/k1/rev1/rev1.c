@@ -3,10 +3,10 @@
 
 void check_standby(void)
 {
-    setPinOutput(C15);
-    writePinLow(C15);
+    setPinOutput(A13);
+    writePinLow(A13);
     wait_ms(50);
-    palSetLineMode(C15, PAL_MODE_INPUT_ANALOG);
+    palSetLineMode(A13, PAL_MODE_INPUT_ANALOG);
 }
 
 
