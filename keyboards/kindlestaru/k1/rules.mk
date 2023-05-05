@@ -27,8 +27,8 @@ NO_USB_STARTUP_CHECK = yes
 
 
 # debug info
-DEBUG_ENABLE ?= yes
-CONSOLE_ENABLE ?= yes
+DEBUG_ENABLE ?= no
+CONSOLE_ENABLE ?= no
 # COMMAND_ENABLE = yes           # Commands for debug and configuration
 
 OPT_DEFS += -DCORTEX_ENABLE_WFI_IDLE=TRUE

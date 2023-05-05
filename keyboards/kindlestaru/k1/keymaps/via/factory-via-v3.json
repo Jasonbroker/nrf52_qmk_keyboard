@@ -1,8 +1,7 @@
 {
-    "name":"IDOBAO",
-    "vendorId": "0x6468",
-    "productId": "0x0100",
-    "menus": ["qmk_rgb_matrix"],
+    "name":"K1",
+    "vendorId": "0x1016",
+    "productId": "0x0001",
     "matrix": {"rows": 5, "cols": 15},
     "layouts": {
         "keymap": [
@@ -110,17 +109,9 @@
                 "w": 6.25
               },
               "4,5",
-              {
-                "w": 1.25
-              },
+              "4,8",
               "4,9",
-              {
-                "w": 1.25
-              },
               "4,10",
-              {
-                "x": 0.5
-              },
               "4,11",
               "4,12",
               "4,13"
