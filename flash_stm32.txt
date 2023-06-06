@@ -1,4 +1,4 @@
-loadfile .build/kindlestar_aquila_via.hex
+loadfile .build/kindlestar_aquila.hex
 
 reset
 

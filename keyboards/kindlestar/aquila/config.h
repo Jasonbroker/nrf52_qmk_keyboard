@@ -35,9 +35,10 @@
 
 // #define NO_ACTION_MACRO
 // #define NO_ACTION_FUNCTION
-
+#ifdef ENCODER_ENABLE
 #define ENCODERS_PAD_A { A5 }
 #define ENCODERS_PAD_B { A6 }
+#endif
 
 #define LED_PIN_ON_STATE 0
 

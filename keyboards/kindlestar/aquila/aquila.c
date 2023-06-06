@@ -73,3 +73,187 @@ bool encoder_update_kb(uint8_t index, bool clockwise) {
 }
 
 #endif
+
+#ifdef BUBBLE_ENABLE
+#include "config.h"
+// #if 1
+#include "hal.h"
+#include "hal_soft_serial.h"
+
+
+#define SSD1_BAUD                     9600
+#define SSD1_BITRATE_MULTIPLIER       4
+#define SSD1_TX_LINE                  PAL_LINE(GPIOA, 6)
+#define SSD1_RX_LINE                  PAL_LINE(GPIOA, 5)
+
+#define SSD1_TIMER                    STM32_TIM3
+#define SSD1_TIMER_CLOCK              STM32_TIMCLK1
+#define SSD1_TIMER_HANDLER            STM32_TIM3_HANDLER
+#define SSD1_TIMER_IRQ_NUMBER         STM32_TIM3_NUMBER
+#define SSD1_TIMER_ENABLE()           rccEnableTIM3(true)
+#define SSD1_TIMER_DISABLE()          rccDisableTIM3()
+#define SSD1_TIMER_RESET()            rccResetTIM3()
+#define SSD1_TIMER_FREQ               SSD1_BAUD * SSD1_BITRATE_MULTIPLIER
+#define SSD1_TIMER_ARR                (uint16_t)((SSD1_TIMER_CLOCK / (SSD1_TIMER_FREQ)) - 1)
+#define SSD1_TIMER_IRQ_PRIORITY       5
+
+static const SoftSerialConfig ssd1_config = {
+    SSD1_BITRATE_MULTIPLIER,
+    false,
+    SSD1_RX_LINE,
+    SSD1_TX_LINE};
+
+SoftSerialDriver SSD1;
+
+/*
+ * TIMER SETUP
+ */
+
+OSAL_IRQ_HANDLER(SSD1_TIMER_HANDLER)
+{
+    OSAL_IRQ_PROLOGUE();
+    SSD1_TIMER->SR = 0; // Clear pending IRQs
+
+    osalSysLockFromISR();
+    ssdTickI(&SSD1);
+    osalSysUnlockFromISR();
+
+    OSAL_IRQ_EPILOGUE();
+}
+
+static void timerStop(void)
+{
+    SSD1_TIMER->CR1 = 0;  // Timer disabled
+    SSD1_TIMER->DIER = 0; // All IRQs disabled
+    SSD1_TIMER->SR = 0;   // Clear pending IRQs
+
+    nvicDisableVector(SSD1_TIMER_IRQ_NUMBER);
+    SSD1_TIMER_DISABLE();
+}
+
+static void timerStart(void)
+{
+    SSD1_TIMER_ENABLE();
+    SSD1_TIMER_RESET();
+
+    nvicEnableVector(SSD1_TIMER_IRQ_NUMBER, SSD1_TIMER_IRQ_PRIORITY);
+
+    SSD1_TIMER->CR1 = 0;  // Initially stopped
+    SSD1_TIMER->CR2 = 0;  //
+    SSD1_TIMER->PSC = 0;  // Prescaler value
+    SSD1_TIMER->SR = 0;   // Clear pending IRQs
+    SSD1_TIMER->DIER = 0; // DMA-related DIER bits
+    SSD1_TIMER->PSC = 0;  // Prescaler value
+
+    SSD1_TIMER->ARR = SSD1_TIMER_ARR;       // Time constant
+    SSD1_TIMER->EGR = 0;                   // Update event
+    SSD1_TIMER->CNT = 0;                   // Reset counter
+    SSD1_TIMER->SR = 0;                    // Clear pending IRQs
+    SSD1_TIMER->CR1 = STM32_TIM_CR1_CEN;   // Enable Timer
+    SSD1_TIMER->DIER = STM32_TIM_DIER_UIE; // Update Event IRQ enabled
+}
+
+/*
+ * INITIALIZATION
+ */
+
+void softSerialInit(void)
+{
+    palSetLineMode(SSD1_RX_LINE, PAL_MODE_INPUT_PULLUP);
+    palSetLineMode(SSD1_TX_LINE, PAL_MODE_OUTPUT_PUSHPULL);
+    ssdObjectInit(&SSD1);
+    ssdStart(&SSD1, &ssd1_config);
+
+    timerStart();
+}
+
+void softSerialStop(void)
+{
+    timerStop();
+
+    ssdStop(&SSD1);
+}
+
+void keyboard_pre_init_user(void) {
+
+    setPinOutputOpenDrain(C15);
+    writePinHigh(C15);
+    softSerialInit();
+}
+
+// uint8_t result = 0;
+
+
+enum app_kbd_cmd {
+    APP_CMD_KBD_NONE = 0x00,
+    APP_CMD_KBD_SEND_KEY                   = 0x01,
+    APP_CMD_KBD_PRESS_KEY                  = 0x02,
+    APP_CMD_KBD_RELEASE_KEY                = 0x03,
+    APP_CMD_KBD_SEND_MOUSE                 = 0x04,
+    APP_CMD_KBD_GET_BATTERY                = 0x13,
+};
+
+// int8_t curent_cmd = APP_CMD_KBD_NONE;
+uint8_t current_idx = 0;
+// static uint8_t keyboard_cmd[1];
+static uint8_t cmd[6];
+static bool ready_to_send = false;
+void housekeeping_task_user(void) {
+
+    while (!iqIsEmptyI(&SSD1.iqueue)) {
+        uint8_t res = ssdGetI(&SSD1);
+        uint8_t current_cmd = cmd[0];
+        if (current_cmd == APP_CMD_KBD_SEND_KEY && current_idx == 1) {
+            uprintf("kbd %02x\n", res);
+            tap_code(res);
+            current_idx = 0;
+            ready_to_send = true;
+            break;
+        } else if (current_cmd == APP_CMD_KBD_SEND_MOUSE && current_idx % 5 == 0) {
+            uprintf("mouse %02x %d %d\n", cmd[1], cmd[2], cmd[3]);
+            ready_to_send = true;
+            current_idx = 0;
+            break;
+        } else {
+            if (current_idx == 0) {
+                uprintf("cmd %02x\n", res);
+            } else {
+                uprintf("data cmd:%02x idx:%d %02x\n",current_cmd, current_idx, res);
+            }
+            ready_to_send = false;
+            cmd[current_idx] = res;
+            current_idx++;
+        }
+
+    }
+}
+
+// pointing device
+void pointing_device_driver_init(void) {
+
+}
+
+report_mouse_t pointing_device_driver_get_report(report_mouse_t mouse_report) {
+    if (cmd[0] == APP_CMD_KBD_SEND_MOUSE && ready_to_send) {
+        mouse_report.buttons = cmd[1];
+        mouse_report.x = cmd[2];
+        mouse_report.y = cmd[3];
+        mouse_report.v = cmd[4];
+        mouse_report.h = cmd[5];
+        memset(cmd, 0, sizeof cmd);
+        uprintf("pointer send\n");
+    }
+     return mouse_report;
+}
+
+uint16_t pointing_device_driver_get_cpi(void) {
+    return 16;
+}
+
+
+void pointing_device_driver_set_cpi(uint16_t cpi) {
+
+}
+
+#endif
+

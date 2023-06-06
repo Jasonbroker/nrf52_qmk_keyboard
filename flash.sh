@@ -1,7 +1,7 @@
 #! /bin/bash
 
 #build
-make kindlestar/aquila:via
+make kindlestar/aquila
 
 #target=./build/kindlestar_orion_rev1_via.hex
 

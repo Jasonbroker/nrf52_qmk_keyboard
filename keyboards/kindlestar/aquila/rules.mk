@@ -15,8 +15,6 @@ RGB_MATRIX_ENABLE = yes
 RGB_MATRIX_DRIVER = WS2812
 AUDIO_ENABLE = no           # Audio output
 
-ENCODER_ENABLE = yes
-
 OPT_DEFS += -DCORTEX_ENABLE_WFI_IDLE=TRUE
 DEBOUNCE_TYPE = sym_defer_pk    # Debounce using eager_pk.
 NO_USB_STARTUP_CHECK = yes

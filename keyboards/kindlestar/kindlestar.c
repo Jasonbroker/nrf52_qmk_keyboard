@@ -39,7 +39,7 @@
 void check_standby(void);
 void POWER_EnterSleep_v1(void);
 
-void keyboard_pre_init_user()
+void keyboard_pre_init_kb()
 {
     // enable 4.2v power
     setPinOutput(B11);
@@ -52,6 +52,8 @@ void keyboard_pre_init_user()
 
     orion_uart_init();
     init_send_mode();
+
+    keyboard_pre_init_user();
 }
 
 // fixme
@@ -95,8 +97,9 @@ void init_send_mode(void)
 }
 
 extern uint8_t sleep_counter;
-void housekeeping_task_user(void)
+void housekeeping_task_kb(void)
 {
+    housekeeping_task_user();
     if (!sdGetWouldBlock(&SD1))
     {
         // 数据同步完成
