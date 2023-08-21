@@ -178,7 +178,11 @@ void keyboard_pre_init_user(void) {
 
     setPinOutputOpenDrain(C15);
     writePinHigh(C15);
+    setPinOutputOpenDrain(C14);
+    writePinLow(C14);
     softSerialInit();
+
+
 }
 
 // uint8_t result = 0;

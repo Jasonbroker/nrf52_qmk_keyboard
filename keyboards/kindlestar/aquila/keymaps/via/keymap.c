@@ -227,9 +227,10 @@ static bool process_record_user_special(uint16_t keycode, keyrecord_t *record) {
     if (pressed) {
         uprintf("resetting device \n");
         writePinLow(C15);
-        wait_ms(200);
+        writePinHigh(C14);
+        wait_ms(500);
         writePinHigh(C15);
-
+        writePinLow(C14);
     }
     break;
   case ENT_SLP:
