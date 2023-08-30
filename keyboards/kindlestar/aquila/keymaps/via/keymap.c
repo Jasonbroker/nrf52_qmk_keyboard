@@ -20,6 +20,7 @@
 #include "keycode_config.h"
 #include "keymap.h"
 #include "aquila.h"
+#include "eeconfig.h"
 #ifdef RGB_MATRIX_ENABLE
 #include "rgb_matrix.h"
 #endif
@@ -67,7 +68,7 @@ enum custom_keycodes {
     CRGBRST,
     OSSWTCH,
     CUR_MOD,  /* current mode  */
-
+    BUB_SWH,
     NORM
 };
 
@@ -100,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_FN] = LAYOUT(
         SEL_USB, ADV_ID0, ADV_ID1, ADV_ID2, ADV_ID3, ADV_ID4, ADV_ID5, SEL_RDOE,_______,    _______,        DELBNDS, _______, _______,  REC_DFU,
         _______, BLE_RBD, _______, _______, QK_BOOT, TESTMOD, _______, _______, _______,    CRGBRST,        CUR_MOD, RGB_SAI, RGB_SAD,  _______,
-        _______, AD_WO_L, _______, _______, _______, TOG_GAM, TG(0),   TG(1),   _______,    RGB_TOG,        RGB_HUI, RGB_HUD, _______,  ENT_SLP,
+        _______, AD_WO_L, BUB_SWH, _______, _______, TOG_GAM, TG(0),   TG(1),   _______,    RGB_TOG,        RGB_HUI, RGB_HUD, _______,  ENT_SLP,
         _______, _______, _______, _______, _______, _______, _______, _______, _______,    _______,        _______, _______, RGB_VAI,
         _______, _______, _______,                   _______, _______, _______, _______,    _______,        _______, RGB_RMOD,RGB_VAD,  RGB_MOD
     ),
@@ -282,6 +283,28 @@ case TESTMOD:
     }
   }
     break;
+  case BUB_SWH:
+  {
+    if (pressed)
+    {
+            setPinOutput(C15);
+            setPinOutput(C14);
+            if (eeconfig_read_kb() == 0xff) {
+                eeconfig_update_kb(0);
+                writePinLow(C15);
+                writePinHigh(C14);
+                uprintf("open bubble\n");
+            } else {
+                eeconfig_update_kb(0xff);
+                writePinHigh(C15);
+                writePinLow(C14);
+                uprintf("close bubble\n");
+            }
+        wait_ms(500);
+        setPinInput(C15);
+        setPinInput(C14);
+    }
+  }
   default:
     // other unspecial keys
     return true;
