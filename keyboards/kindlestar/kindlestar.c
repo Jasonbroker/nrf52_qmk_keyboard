@@ -80,6 +80,11 @@ inline void perform_cmd(KBD_CMD cmd)
     sdPut(&SD1, cmd);
 }
 
+void perform_cmd_data(KBD_CMD cmd, uint8_t data) {
+    sdPut(&SD1, cmd);
+    sdPut(&SD1, data);
+}
+
 SEND_MODE mode = 0;
 bool synced = false;
 bool syncing = false;

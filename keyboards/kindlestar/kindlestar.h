@@ -47,6 +47,7 @@ typedef enum {
     KBD_CMD_REBOOT = 11 << 3,
     KBD_CMD_RECEIVER_DFU = 12 << 3,
     KBD_CMD_TEST = 13 << 3,
+    KBD_CMD_BAT = 14 << 3, // 发送电量信息给蓝牙，调用方法 perform_cmd_data(KBD_CMD_BAT, 电量值)
 
     KBD_SELECT_CMD_USB = 20 << 3,
     KBD_SELECT_CMD_BLE1 = KBD_SELECT_CMD_USB + SEND_MODE_BLE_CHANNEL_1,
@@ -69,6 +70,8 @@ enum {
 };
 
 void perform_cmd(KBD_CMD cmd);
+
+void perform_cmd_data(KBD_CMD cmd, uint8_t data);
 
 void init_send_mode(void);
 
