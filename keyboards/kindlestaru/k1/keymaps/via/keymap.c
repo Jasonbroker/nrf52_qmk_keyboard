@@ -86,13 +86,6 @@ void log_rgb_state(void);
 void lightup_current_mode(void);
 #endif
 
-void keyboard_post_init_user(void) {
-  // Customise these values to desired behaviour
-  debug_enable=true;
-//   debug_matrix=true;
-//   debug_keyboard=true;
-//   debug_mouse=true;
-}
 
 void enter_standby_mode(void);
 static bool process_record_user_special(uint16_t keycode, keyrecord_t *record) {
@@ -137,12 +130,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch(keycode)
   {
     case CRGBRST:
-      #ifdef RGB_MATRIX_ENABLE
-        if (record->event.pressed) {
-            rgblight_enable();
-            eeconfig_update_rgb_matrix_default();
-        }
-      #endif
+      breathing_pulse();
+      return true;
       break;
     case RGB_TOG:
     if (!record->event.pressed) {

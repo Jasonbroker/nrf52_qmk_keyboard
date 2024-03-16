@@ -40,26 +40,53 @@ void keyboard_pre_init_user()
 
 }
 
+#ifdef NKRO_ENABLE
+#    include "keycode_config.h"
+extern keymap_config_t keymap_config;
+#endif
+
+
+void handlenkro(void)
+{
+#ifdef NKRO_ENABLE
+    keymap_config.nkro = true;
+#endif
+}
+
+void keyboard_post_init_user()
+{
+    handlenkro();
+}
+
+void suspend_power_down_user()
+{
+    writePinLow(B11);
+}
+
+void suspend_wakeup_init_user()
+{
+    writePinHigh(B11);
+}
+
+
+void start_selection_rgb_animation(void) {
+    if (!is_backlight_enabled() || is_backlight_breathing()) {
+        return;
+    }
+    backlight_toggle_breathing();
+
+}
+
+
+
 // fixme
 void reboot_system(void)
 {
 
 }
 
-#ifdef NKRO_ENABLE
-#    include "keycode_config.h"
-extern keymap_config_t keymap_config;
-#endif
-
-void start_selection_rgb_animation(void) {}
-
-
-void handlenkro(void)
-{
-    keymap_config.nkro = true;
-}
-
 void kbd_will_enter_sleep(void) {
+    return;
     led_suspend();
     usbStop(&USB_DRIVER);
     usbDisconnectBus(&USB_DRIVER);
