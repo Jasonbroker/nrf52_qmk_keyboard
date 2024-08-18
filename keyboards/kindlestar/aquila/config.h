@@ -56,7 +56,7 @@
 /* NKRO */
 // #define FORCE_NKRO
 
-#define RGB_DI_PIN B9
+#define WS2812_DI_PIN B9
 /* RGB Matrix Configuration */
 
 #ifdef RGB_MATRIX_ENABLE
@@ -71,7 +71,7 @@
 #define RGB_MATRIX_KEYPRESSES
 #define RGB_MATRIX_LED_FLUSH_LIMIT 26
 #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 160
-#define RGB_DISABLE_WHEN_USB_SUSPENDED  // turn off effects when suspended
+#define RGB_MATRIX_SLEEP  // turn off effects when suspended
 #define RGB_MATRIX_STARTUP_HUE 170
 #define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_CYCLE_ALL
 
