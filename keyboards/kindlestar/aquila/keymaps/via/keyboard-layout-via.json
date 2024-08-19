@@ -1,0 +1,165 @@
+{
+    "name":"AQUILA",
+    "vendorId": "0x3468",
+    "productId": "0x0102",
+    "lighting": "qmk_rgblight",
+    "customKeycodes": [
+        {"name": "Select USB", "title": "Select USB", "shortName": "USB"},
+        {"name": "Select BLE1", "title": "Select BLE1", "shortName": "BLE1"},
+        {"name": "Select BLE2", "title": "Select BLE2", "shortName": "BLE2"},
+        {"name": "Select BLE3", "title": "Select BLE3", "shortName": "BLE3"},
+        {"name": "Select BLE4", "title": "Select BLE4", "shortName": "BLE4"},
+        {"name": "Select BLE5", "title": "Select BLE5", "shortName": "BLE5"},
+        {"name": "Select BLE6", "title": "Select BLE6", "shortName": "BLE6"},
+        {"name": "Select 2.4G", "title": "Select 2.4G", "shortName": "2.4G"},
+        {"name": "Rebond Current", "title": "Select 2.4G", "shortName": "Rebond BLE"},
+        {"name": "Clear Bonds", "title": "Clear Bonds", "shortName": "CLRBND"},
+        {"name": "Toggle Gaming", "title": "Toggle Gaming", "shortName": "GAMING"},
+        {"name": "Enter Sleep", "title": "Enter Sleep", "shortName": "KBDSLP"},
+        {"name": "Receiver Dfu", "title": "Receiver Dfu", "shortName": "REC_DFU"}
+      ],
+    "matrix": {"rows": 5, "cols": 14},
+    "layouts": {
+        "keymap": [
+            [
+              "0,0",
+              "0,1",
+              "0,2",
+              "0,3",
+              "0,4",
+              "0,5",
+              "0,6",
+              "0,7",
+              "0,8",
+              "0,9",
+              "0,10",
+              "0,11",
+              "0,12",
+              {
+                "w": 2
+              },
+              "0,13"
+            ],
+            [
+              {
+                "w": 1.5
+              },
+              "1,0",
+              "1,1",
+              "1,2",
+              "1,3",
+              "1,4",
+              "1,5",
+              "1,6",
+              "1,7",
+              "1,8",
+              "1,9",
+              "1,10",
+              "1,11",
+              "1,12",
+              {
+                "w": 1.5
+              },
+              "1,13",
+              {
+                "w": 0.75
+              },
+              "4,6",
+              {
+                "w": 0.75
+              },
+              "2,13",
+              {
+                "w": 0.75
+              },
+              "4,7"
+            ],
+            [
+              {
+                "w": 1.75
+              },
+              "2,0",
+              "2,1",
+              "2,2",
+              "2,3",
+              "2,4",
+              "2,5",
+              "2,6",
+              "2,7",
+              "2,8",
+              "2,9",
+              "2,10",
+              "2,11",
+              {
+                "w": 2.25
+              },
+              "2,12"
+            ],
+            [
+              {
+                "w": 2.25
+              },
+              "3,0",
+              "3,1",
+              "3,2",
+              "3,3",
+              "3,4",
+              "3,5",
+              "3,6",
+              "3,7",
+              "3,8",
+              "3,9",
+              "3,10",
+              {
+                "w": 2.75
+              },
+              "3,11",
+              {
+                "x": 0.25,
+                "a": 7
+              },
+              "3,12"
+            ],
+            [
+              {
+                "a": 4,
+                "w": 1.25
+              },
+              "4,0",
+              {
+                "w": 1.25
+              },
+              "4,1",
+              {
+                "w": 1.25
+              },
+              "4,2",
+              {
+                "a": 7,
+                "w": 6.25
+              },
+              "4,5",
+              {
+                "a": 4,
+                "w": 1.25
+              },
+              "4,8",
+              {
+                "w": 1.25
+              },
+              "4,9",
+              {
+                "w": 1.25
+              },
+              "4,10",
+              {
+                "x": 0.5,
+                "a": 7
+              },
+              "4,11",
+              "4,12",
+              "4,13"
+            ]
+          ]
+      }
+}
