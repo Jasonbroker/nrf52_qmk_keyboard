@@ -36,7 +36,7 @@ if (keymap_config.nkro)
 } else
 #endif
 {
-    uint8_t *raw = report->raw;
+    uint8_t *raw = report->keys;
     sdPut(&SD1, KBD_SEND_CMD_REPORT_ID_KEYBOARD | mode);
     sdWrite(&SD1, raw, KEYBOARD_REPORT_SIZE);
 }

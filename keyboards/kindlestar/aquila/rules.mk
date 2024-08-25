@@ -29,7 +29,7 @@ CONSOLE_ENABLE ?=no
 
 #EXCLUDE = $(CHIBIOS_DIR)
 SRC += ../kindlestar_output_auto_select.c
-SRC += ../usb_sender.c
+# SRC += ../usb_sender.c
 SRC += ../uart_sender.c
 SRC += ../kindlestar_custom_animation.c
 

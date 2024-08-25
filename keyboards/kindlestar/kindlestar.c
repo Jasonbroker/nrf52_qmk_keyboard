@@ -295,7 +295,7 @@ void kbd_will_enter_sleep(void) {
     // stop rgb light
     setPinInput(C14);
 
-    shutdown_user();
+    // suspend_power_down();
     // setPinInputHigh(A0);
     // palEnableLineEvent(A0, PAL_EVENT_MODE_BOTH_EDGES);
 

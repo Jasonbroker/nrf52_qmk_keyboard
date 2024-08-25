@@ -154,10 +154,10 @@ void protocol_pre_init(void) {
             break;
         }
 #else
-#ifdef USE_USB_MOD
-    driver = &chibios_driver;
+#ifdef KINDLESTAR_MOCK
+    driver = &orion_chibios_driver;
 #else
-    driver = &orion_chibios_driver;    
+    driver = &chibios_driver;
 #endif
         break;
 #endif

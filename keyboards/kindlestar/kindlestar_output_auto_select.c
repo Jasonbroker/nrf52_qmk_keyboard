@@ -1,5 +1,5 @@
 #include "kindlestar_output_auto_select.h"
-#include "usb_sender.h"
+// #include "usb_sender.h"
 #include "uart_sender.h"
 #include "kindlestar.h"
 #include "usb_main.h"
@@ -46,14 +46,10 @@ void start_sleep_timer(void)
     chVTSetI(&sleep_vt, TIME_S2I(SLEEP_CHECK_INTERVAL), sleep_cb, NULL);
 }
 
-uint8_t ble_keyboard_led_state;
+led_t ble_keyboard_led_state;
 void update_ble_keyboard_led_state(bool on)
 {
-    if (on) {
-        ble_keyboard_led_state |= 1 << USB_LED_CAPS_LOCK;
-    } else {
-        ble_keyboard_led_state = 0;
-    }
+    ble_keyboard_led_state.caps_lock = on;
 }
 
 void    send_keyboard(report_keyboard_t *report);
@@ -62,16 +58,18 @@ void    send_extra(report_extra_t *report);
 
 uint8_t orion_keyboard_leds(void);
 void    orion_send_keyboard(report_keyboard_t *report);
+void    orion_send_nkro(report_nkro_t *report);
 void    orion_send_mouse(report_mouse_t *report);
 void    orion_send_extra(report_extra_t *report);
 
-host_driver_t orion_chibios_driver = {orion_keyboard_leds, orion_send_keyboard, orion_send_mouse, orion_send_extra};
+host_driver_t orion_chibios_driver = {orion_keyboard_leds, orion_send_keyboard, orion_send_nkro, orion_send_mouse, orion_send_extra};
 //
 extern uint8_t keyboard_led_state;
 
 uint8_t orion_keyboard_leds(void)
 {
-    return current_send_mode() == SEND_MODE_USB ? keyboard_led_state : ble_keyboard_led_state;
+    uint8_t ble_val = *(uint8_t *)(&ble_keyboard_led_state);
+    return current_send_mode() == SEND_MODE_USB ? keyboard_led_state : ble_val;
 }
 
 void orion_send_keyboard(report_keyboard_t *report)
@@ -86,6 +84,12 @@ void orion_send_keyboard(report_keyboard_t *report)
         orion_uart_send_keyboard(report);
     }
     keyboard_sleep_counter_reset();
+}
+
+void orion_send_nkro(report_nkro_t *report)
+{
+// fixme: nkro support
+
 }
 
 void orion_send_mouse(report_mouse_t *report)
