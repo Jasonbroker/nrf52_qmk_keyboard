@@ -10,11 +10,17 @@
 
 Make example for this keyboard (after setting up your build environment):
 
-    make kindlestar_br80:default
+    make kindlestar_br80:via FORCE_LAYOUT=LAYOUT_87_ansi
+    
+    or
+    
+    make kindlestar_br80:via FORCE_LAYOUT=LAYOUT_87_iso
 
 Flashing example for this keyboard:
 
-    make kindlestar_br80:default:flash
+    make kindlestar_br80:via:flash FORCE_LAYOUT=LAYOUT_87_ansi
+    
+    make kindlestar_br80:via:flash FORCE_LAYOUT=LAYOUT_87_iso
 
 See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) and the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information. Brand new to QMK? Start with our [Complete Newbs Guide](https://docs.qmk.fm/#/newbs).
 

@@ -1,6 +1,6 @@
 {
-    "manufacturer": "Jasonbroker",
-    "keyboard_name": "br80",
+    "manufacturer": "Baionlenja",
+    "keyboard_name": "Bias_DE",
     "maintainer": "Jasonbroker",
     "bootloader": "stm32-dfu",
     "diode_direction": "COL2ROW",
@@ -22,8 +22,8 @@
     "rgblight": {
         "saturation_steps": 8,
         "brightness_steps": 8,
-        "led_count": 46,
-        "max_brightness": 128,
+        "led_count": 43,
+        "max_brightness": 180,
         "animations": {
             "breathing": true,
             "rainbow_mood": true,
@@ -46,9 +46,9 @@
     },
     "processor": "STM32F072",
     "usb": {
-        "device_version": "1.0.0",
-        "pid": "0x0001",
-        "vid": "0x1435"
+        "vid": "0x4350",
+        "pid": "0x0003",
+        "device_version": "1.0.0"
     },
     "bootmagic": {
     "matrix": [0, 0]
@@ -158,14 +158,14 @@
                 {"matrix": [5, 15], "x": 17.25, "y": 5.25}
             ]
         },
-        "LAYOUT_87_soilder": {
+        "LAYOUT_87_solder": {
             "layout": [
                 {"matrix": [0, 0], "x": 0, "y": 0},
 
-                {"matrix": [0, 1], "x": 2, "y": 0},
-                {"matrix": [0, 2], "x": 3, "y": 0},
-                {"matrix": [0, 3], "x": 4, "y": 0},
-                {"matrix": [0, 4], "x": 5, "y": 0},
+                {"matrix": [0, 1], "x": 1, "y": 0},
+                {"matrix": [0, 2], "x": 2, "y": 0},
+                {"matrix": [0, 3], "x": 3, "y": 0},
+                {"matrix": [0, 4], "x": 4, "y": 0},
 
                 {"matrix": [0, 6], "x": 6.5, "y": 0},
                 {"matrix": [0, 7], "x": 7.5, "y": 0},
@@ -195,8 +195,8 @@
                 {"matrix": [1, 10], "x": 10, "y": 1.25},
                 {"matrix": [1, 11], "x": 11, "y": 1.25},
                 {"matrix": [1, 12], "x": 12, "y": 1.25},
-                {"matrix": [1, 13], "x": 13, "y": 1.25},
-                {"matrix": [1, 14], "x": 15.25, "y": 1.25},
+                {"matrix": [1, 13], "x": 13, "y": 1.25, "w": 2},
+                {"matrix": [1, 14], "x": 14, "y": 1.25},
                 {"matrix": [1, 15], "x": 15.25, "y": 1.25},
                 {"matrix": [1, 16], "x": 16.25, "y": 1.25},
                 {"matrix": [1, 17], "x": 17.25, "y": 1.25},
@@ -233,8 +233,7 @@
                 {"matrix": [3, 11], "x": 11.75, "y": 3.25},
                 {"matrix": [3, 12], "x": 12.75, "y": 3.25, "w": 2.25},
 
-
-                {"matrix": [4, 0], "x": 0, "y": 4.25, "w": 1.25},
+                {"matrix": [4, 0], "x": 0, "y": 4.25, "w": 2.25},
                 {"matrix": [4, 1], "x": 1.25, "y": 4.25},
                 {"matrix": [4, 2], "x": 2.25, "y": 4.25},
                 {"matrix": [4, 3], "x": 3.25, "y": 4.25},
@@ -246,10 +245,9 @@
                 {"matrix": [4, 9], "x": 9.25, "y": 4.25},
                 {"matrix": [4, 10], "x": 10.25, "y": 4.25},
                 {"matrix": [4, 11], "x": 11.25, "y": 4.25},
-                {"matrix": [4, 12], "x": 12.25, "y": 4.25, "w": 1.75},
-                {"matrix": [4, 13], "x": 12.25, "y": 4.25, "w": 1},
+                {"matrix": [4, 12], "x": 12.25, "y": 4.25, "w": 2.75},
+				{"matrix": [4, 13], "x": 12.25, "y": 4.25, "w": 1},
                 {"matrix": [4, 15], "x": 16.25, "y": 4.25},
-
 
                 {"matrix": [5, 0], "x": 0, "y": 5.25, "w": 1.25},
                 {"matrix": [5, 1], "x": 1.25, "y": 5.25, "w": 1.25},
