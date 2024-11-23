@@ -17,6 +17,7 @@
 
 #include "kindlestar.h"
 #include "hal.h"
+#include "ch.h"
 #include "gpio.h"
 #include "config.h"
 #include "kindlestar_output_auto_select.h"
@@ -139,6 +140,8 @@ void housekeeping_task_kb(void)
     }
 }
 
+void handlenkro(void);
+
 #ifdef NKRO_ENABLE
 #    include "keycode_config.h"
 extern keymap_config_t keymap_config;
@@ -161,7 +164,6 @@ void finish_handler(void)
     }
 }
 
-void handlenkro(void);
 #include "kindlestar_custom_animation.h"
 void start_selection_rgb_animation(void)
 {
@@ -377,4 +379,8 @@ void POWER_EnterSleep_v1(void) {
 
     __WFI();
 }
+#else
+// warning "no standby method provided"
+void check_standby(void) {}
+void POWER_EnterSleep_v1(void) {}
 #endif
