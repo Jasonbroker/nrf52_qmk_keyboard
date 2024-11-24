@@ -24,7 +24,6 @@ void notify_usb_device_state_change_kb(enum usb_device_state usb_device_state);
 
 static void sleep_cb(virtual_timer_t *vtp, void *p)
 {
-    uprintf("sleep count time %d \n", sleep_counter);
     if (sleep_counter >= SLEEP_OFF_TIMEOUT) {
         uprintf("will enter sleep mode \n");
         enter_standby_mode();
